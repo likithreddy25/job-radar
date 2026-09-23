@@ -38,7 +38,7 @@ jobs:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
           DB_PATH: state/gha-jobs.db
-        run: python -m src.main --mode main --no-notify
+        run: python -m src.main --mode main --notify-yes-only
 
       - name: Prune and compact jobs database
         run: python tools/prune_state_db.py state/gha-jobs.db --keep-days "${SOURCE_RUNS_RETENTION_DAYS:-14}"
