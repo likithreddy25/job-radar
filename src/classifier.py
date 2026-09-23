@@ -1,4 +1,7 @@
-"""Data-domain job title classifier — tuned for Data Analyst / Data Scientist / Data Engineer roles.
+"""Job title classifier — tuned for Likhith's targets: Software Engineer, Data Engineer,
+Data Analyst, Data Scientist, ML/AI Engineer, and GenAI/LLM/agent roles (2026-09-23).
+Senior/Staff/Principal/Lead/Manager titles are "no" (not "maybe"), and quant, BI,
+finance/marketing/ops analyst titles are out of scope.
 
 Scoring:
   yes   (score 70–100) — strong data role match
@@ -20,6 +23,34 @@ from dataclasses import dataclass
 # Data-domain STRONG includes  →  base score 90
 # ---------------------------------------------------------------------------
 DATA_STRONG = [
+    # Software engineering (added 2026-09-23 — core target, previously hard-excluded)
+    "backend developer",
+    "full stack developer",
+    "full-stack developer",
+    "python engineer",
+    "python developer",
+    "sde",
+    "software engineer",
+    "software developer",
+    "software development engineer",
+    "backend engineer",
+    "back-end engineer",
+    "back end engineer",
+    "full stack engineer",
+    "fullstack engineer",
+    "full-stack engineer",
+    # AI / GenAI / agents
+    "ai/ml engineer",
+    "ai ml engineer",
+    "applied ai engineer",
+    "ai developer",
+    "agent engineer",
+    "agentic ai",
+    "conversational ai",
+    "ai solutions engineer",
+    "research engineer",
+    "genai engineer",
+    "machine learning scientist",
     # Core data roles
     "data analyst",
     "data analytics",
@@ -30,36 +61,20 @@ DATA_STRONG = [
     "analytics engineer",
     "analytics analyst",
     # Business Intelligence
-    "business intelligence",
-    "bi analyst",
-    "bi engineer",
-    "bi developer",
-    "bi developer",
-    "intelligence analyst",
     # Machine Learning / AI (data side)
     "machine learning engineer",
     "ml engineer",
     "applied scientist",
-    "research scientist",
     "decision scientist",
     "ai data",
     # Quantitative / Statistical
-    "quantitative analyst",
-    "quant analyst",
     "statistical analyst",
-    "statistical modeler",
-    "forecasting analyst",
     # Platform / Infrastructure / Quality (data)
     "data platform engineer",
     "data infrastructure engineer",
     "data reliability engineer",
     "data quality engineer",
     "data quality analyst",
-    "data governance",
-    "data management analyst",
-    "data operations analyst",
-    "data architect",
-    "analytics architect",
     # ETL / Warehouse
     "etl engineer",
     "etl developer",
@@ -72,14 +87,7 @@ DATA_STRONG = [
     # Insights / Reporting
     "insights analyst",
     "insights engineer",
-    "reporting analyst",
     "product analyst",
-    "growth analyst",
-    "marketing analyst",
-    "financial analyst",
-    "operations analyst",
-    "clinical data analyst",
-    "research analyst",
     # AI/ML Data Engineering
     "feature engineer",
     "mlops engineer",
@@ -99,9 +107,6 @@ DATA_STRONG = [
     "multimodal",
     "foundation model",
     # Consulting / advisory (data-focused)
-    "analytics consultant",
-    "data consultant",
-    "data advisor",
 ]
 
 # ---------------------------------------------------------------------------
@@ -134,9 +139,9 @@ DATA_WEAK = [
     "ai analyst",
     "ai scientist",
     # Business/operations data-adjacent
-    "business analyst",
-    "business intelligence analyst",
-    "operations research",
+    "product analyst",
+    "insights analyst",
+    "reporting analyst",
 ]
 
 # ---------------------------------------------------------------------------
@@ -144,18 +149,9 @@ DATA_WEAK = [
 # ---------------------------------------------------------------------------
 HARD_EXCLUDES = [
     # Pure software engineering (no data modifier)
-    "software engineer",
-    "software developer",
-    "software development engineer",
     "frontend engineer",
     "front-end engineer",
     "front end engineer",
-    "backend engineer",
-    "back-end engineer",
-    "back end engineer",
-    "full stack engineer",
-    "fullstack engineer",
-    "full-stack engineer",
     "mobile engineer",
     "ios engineer",
     "android engineer",
@@ -172,6 +168,35 @@ HARD_EXCLUDES = [
     "security engineer",
     "cybersecurity",
     "penetration tester",
+    # Out of scope for this candidate (no evidence / not wanted)
+    "quantitative",
+    "quant ",
+    "business intelligence",
+    "bi analyst",
+    "bi engineer",
+    "bi developer",
+    "financial analyst",
+    "marketing analyst",
+    "operations analyst",
+    "intelligence analyst",
+    "sdet",
+    "software development engineer in test",
+    "software engineer in test",
+    "firmware",
+    "silicon",
+    "asic",
+    "fpga",
+    "gpu kernel",
+    "compiler",
+    "java developer",
+    "java engineer",
+    "c++",
+    "golang",
+    "rust engineer",
+    ".net",
+    "salesforce",
+    "servicenow developer",
+    "mainframe",
     # QA / Testing
     "quality assurance",
     "qa engineer",
@@ -273,7 +298,7 @@ CLEARANCE_EXCLUDE_REGEXES = [
 # Seniority tokens — always clamp to "maybe" or "no"
 # ---------------------------------------------------------------------------
 SENIORITY_TOKENS = [
-    "senior", "sr", "staff", "principal", "lead", "architect",
+    "senior", "sr", "snr", "staff", "principal", "lead", "architect", "iii", "iv",
     "distinguished", "fellow", "director", "manager", "head of",
     "vp", "vice president",
 ]
@@ -286,7 +311,6 @@ VERY_SENIOR = frozenset(["director", "vp", "vice president", "head of", "fellow"
 DATA_SAFETY_NET_OVERRIDES = frozenset([
     "data security analyst",
     "data quality engineer",
-    "data governance",
     "data management",
     "data operations",
     "data steward",
@@ -305,6 +329,11 @@ DATA_SAFETY_NET_OVERRIDES = frozenset([
     "llm engineer",
     "prompt engineer",
     "ai data engineer",
+    "ml platform engineer",
+    "machine learning platform engineer",
+    "ai platform engineer",
+    "ai solutions engineer",
+    "mlops",
 ])
 
 
@@ -361,10 +390,8 @@ def classify(title: str) -> ClassifyResult:
     # Seniority cap — senior/staff/principal → "maybe"; director/vp → "no"
     for tok in SENIORITY_TOKENS:
         if re.search(rf"\b{re.escape(tok)}\b", t):
-            if tok in VERY_SENIOR:
-                score = min(score, 34)
-            else:
-                score = min(score, 65)
+            # Candidate has ~3 years: every seniority-titled role is out of scope.
+            score = min(score, 34)
             break
 
     score = max(0, min(score, 100))

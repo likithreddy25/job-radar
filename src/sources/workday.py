@@ -35,8 +35,6 @@ _DETAIL_SKIP_TITLE_MARKERS = (
     "merchandiser",
     "retail",
     "sales floor",
-    "software engineer",
-    "senior software engineer",
     "associate business partner",
     "solutions architect",
     "enterprise architect",
