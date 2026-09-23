@@ -1,0 +1,108 @@
+name: Job Radar - Broad Non-Workday Board Sweep
+
+on:
+  schedule:
+    - cron: "42 */3 * * *"   # Offset from the normal board sweep.
+  workflow_dispatch:
+    inputs:
+      batch_size:
+        description: "Boards per batch (default: 300)"
+        required: false
+        default: "300"
+      run_until_wrap:
+        description: "Full broad sweep (run until cursor wraps)"
+        type: boolean
+        required: false
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: job-radar-broad-non-workday-boards-state
+  cancel-in-progress: false
+
+jobs:
+  sweep:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run broad non-Workday board sweep
+        env:
+          EMAIL_USER: ${{ secrets.EMAIL_USER }}
+          EMAIL_APP_PASSWORD: ${{ secrets.EMAIL_APP_PASSWORD }}
+          ALERT_TO_EMAIL: ${{ secrets.ALERT_TO_EMAIL }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          DB_PATH: state/gha-boards-broad-non-workday.db
+          BOARDS_CSV: data/boards/BROAD_NON_WORKDAY_EXTRA.csv
+          BOARDS_RESCAN_COOLDOWN_HOURS: ${{ github.event_name == 'schedule' && '12' || '' }}
+        run: |
+          BATCH=${{ github.event.inputs.batch_size || '300' }}
+          WRAP=${{ github.event.inputs.run_until_wrap || 'false' }}
+          CMD="python -m src.main --mode boards --boards-csv data/boards/BROAD_NON_WORKDAY_EXTRA.csv --boards-batch-size $BATCH --notify-yes-only"
+          if [ "$WRAP" = "true" ]; then
+            CMD="$CMD --boards-run-until-wrap"
+          fi
+          eval $CMD
+
+      - name: Export broad dead boards report
+        env:
+          DB_PATH: state/gha-boards-broad-non-workday.db
+          BOARDS_CSV: data/boards/BROAD_NON_WORKDAY_EXTRA.csv
+        run: python -m src.main --mode boards --dry-run --boards-csv data/boards/BROAD_NON_WORKDAY_EXTRA.csv --export-dead-csv state/gha-dead_boards_broad_non_workday.csv
+        continue-on-error: true
+
+      - name: Compact broad boards database
+        run: |
+          if [ -f state/gha-boards-broad-non-workday.db ]; then
+            python tools/prune_state_db.py state/gha-boards-broad-non-workday.db --keep-days "${SOURCE_RUNS_RETENTION_DAYS:-14}"
+          fi
+
+      - name: Commit broad state
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          MAX_BYTES=$((95 * 1024 * 1024))
+          if [ -f state/gha-boards-broad-non-workday.db ]; then
+            DB_BYTES=$(wc -c < state/gha-boards-broad-non-workday.db)
+            echo "state/gha-boards-broad-non-workday.db size: ${DB_BYTES} bytes"
+            if [ "$DB_BYTES" -le "$MAX_BYTES" ]; then
+              git add -f state/gha-boards-broad-non-workday.db
+            else
+              echo "::error file=state/gha-boards-broad-non-workday.db::state/gha-boards-broad-non-workday.db is ${DB_BYTES} bytes, over the 95 MiB cap even after pruning. Lower SOURCE_RUNS_RETENTION_DAYS. Failing so this is not silently lost."
+              exit 1
+            fi
+          fi
+          if [ -f state/gha-dead_boards_broad_non_workday.csv ]; then
+            git add -f state/gha-dead_boards_broad_non_workday.csv
+          fi
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git commit -m "chore: update broad non-workday boards state [skip ci]"
+          for attempt in 1 2 3; do
+            git pull --rebase origin ${{ github.ref_name }}
+            if git push origin HEAD:${{ github.ref_name }}; then
+              exit 0
+            fi
+            if [ "$attempt" -lt 3 ]; then
+              echo "Push race detected on attempt $attempt; retrying after a short pause."
+              sleep 3
+            fi
+          done
+          echo "Broad state push failed after 3 attempts."
+          exit 1

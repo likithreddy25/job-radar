@@ -1,0 +1,148 @@
+% ============================================================
+% CANDIDATE — UNIVERSAL RESUME TEMPLATE
+% Use this file on any AI (Claude, Gemini, GPT) to produce
+% consistent formatting every time.
+%
+% FORMATTING RULES (non-negotiable):
+% - Font: 9pt article
+% - Use ATS-safe LaTeX only
+% - No hyperref package
+% - Header stays exactly in this structure
+% - \pdfgentounicode=1 must stay
+% - Margins / spacing must stay compact enough for one page
+% - Never inflate job titles
+% - Let bullets do the tailoring, not fake titles
+% - Keep claims defensible; do not overclaim tools/frameworks
+% - Use address by job location rule
+% - Keep tracked template generic; put personal contact details in a local override
+% - Never write "open to relocation" on the resume
+% ============================================================
+
+\documentclass[letterpaper,9pt]{article}
+
+\usepackage[empty]{fullpage}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{titlesec}
+\usepackage{enumitem}
+
+\input{glyphtounicode}
+\pdfgentounicode=1
+
+\pagestyle{empty}
+
+\addtolength{\oddsidemargin}{-0.76in}
+\addtolength{\evensidemargin}{-0.76in}
+\addtolength{\textwidth}{1.32in}
+\addtolength{\topmargin}{-0.84in}
+\addtolength{\textheight}{2.36in}
+
+\titleformat{\section}{\bfseries}{}{0em}{}[\titlerule]
+\titlespacing*{\section}{0pt}{2pt}{1pt}
+\setlist[itemize]{leftmargin=0.18in,itemsep=0pt,topsep=1pt,parsep=0pt,partopsep=0pt}
+
+\begin{document}
+
+	% ============================================================
+	% HEADER — use role-specific address/email placeholders
+	% Keep personal contact details in RESUME_TEMPLATE.local.tex or src/profile_local.py
+	% Available addresses:
+	% - Fairfax, Virginia
+	% - 10 Ridge Run SE, Marietta, GA
+	% - 8011 N MacArthur Blvd, Irving, TX
+	% - 1591 Charterwoods Circle, Fairborn, OH 45324
+	% - 703 Norwood House Rd, Downingtown, PA 19335
+	% ============================================================
+
+	\begin{center}
+		FAIRFAX_OR_ROLE_SPECIFIC_ADDRESS
+	\end{center}
+
+	% ============================================================
+	% SUMMARY
+	% 2-4 lines max
+	% ============================================================
+
+	\section*{Summary}
+	SUMMARY_TEXT_HERE
+
+	% ============================================================
+	% TECHNICAL SKILLS
+	% Only include relevant items for the target role
+	% ============================================================
+
+	\section*{Technical Skills}
+	\textbf{Programming:} Python, SQL, R, Java, Bash/Linux, Git \\
+	\textbf{ML / AI:} Scikit-learn, XGBoost, LightGBM, PyTorch, TensorFlow, LSTM, SHAP, MLflow \\
+	\textbf{LLM / GenAI:} OpenAI API, Hugging Face Transformers, RAG, MCP, Prompt Engineering, LLM Evaluation, FAISS, ChromaDB \\
+	\textbf{Data Engineering:} PySpark, Apache Spark, Databricks, Airflow, dbt, ETL/ELT, Kafka, Hadoop \\
+	\textbf{Cloud / Infra:} AWS (S3, Redshift, Glue, SageMaker, Lambda, Kinesis), Azure, GCP (BigQuery), Docker, Kubernetes, GitHub Actions \\
+	\textbf{Databases / BI:} PostgreSQL, MySQL, MongoDB, Snowflake, BigQuery, DuckDB, Power BI, Tableau, Excel, Matplotlib, Streamlit
+
+	% ============================================================
+	% EXPERIENCE
+	% ============================================================
+
+	\section*{Professional Experience}
+
+	\textbf{H.A.D.E.S --- Data Scientist} \hfill Jan 2024 -- Jul 2025 \\
+	\textit{Early-stage AI \& Automation Startup, Founding Team Member --- Remote}
+	\begin{itemize}
+		\item MOST_RELEVANT_BULLET_FOR_TARGET_ROLE
+		\item SECOND_MOST_RELEVANT_BULLET
+		\item THIRD_RELEVANT_BULLET
+		\item OPTIONAL_FOURTH_BULLET
+	\end{itemize}
+
+	\textbf{Hive Media --- Data Scientist, Growth Analytics} \hfill Jul 2023 -- Dec 2023 \\
+	\textit{Digital Publishing Platform --- Remote}
+	\begin{itemize}
+		\item MOST_RELEVANT_HIVE_BULLET
+		\item SECOND_HIVE_BULLET
+		\item THIRD_HIVE_BULLET
+	\end{itemize}
+
+	\textbf{COEMPT EDUTECK --- Data Analyst Intern} \hfill Jan 2023 -- Jul 2023 \\
+	\textit{Guntur, India}
+	\begin{itemize}
+		\item Analyzed 100K+ operational records using Python and SQL; automated reporting workflows reducing manual effort by 30\%.
+	\end{itemize}
+
+	% ============================================================
+	% PROJECTS
+	% ============================================================
+
+	\section*{Selected Projects}
+
+	\textbf{PROJECT_NAME --- PROJECT_LABEL} \hfill YEAR
+	\begin{itemize}
+		\item PROJECT_BULLET
+	\end{itemize}
+
+	\textbf{PROJECT_NAME --- PROJECT_LABEL} \hfill YEAR
+	\begin{itemize}
+		\item PROJECT_BULLET
+	\end{itemize}
+
+	\textbf{PROJECT_NAME --- PROJECT_LABEL} \hfill YEAR
+	\begin{itemize}
+		\item PROJECT_BULLET
+	\end{itemize}
+
+	% ============================================================
+	% OPTIONAL PUBLICATION
+	% ============================================================
+
+	\section*{Publications}
+	\textbf{Netflix Movie Recommendation Using Cosine Similarity} --- \textit{IJRES}, Vol.\ 11, Issue 3, Mar 2023
+
+	% ============================================================
+	% EDUCATION & CREDENTIALS
+	% ============================================================
+
+	\section*{Education \& Credentials}
+	\textbf{George Mason University} --- M.S. Data Analytics Engineering, GPA 3.97/4.0, Dec 2025 \\
+	\textbf{Prior Institution} --- Prior Degree / Program, Graduation Date \\
+	\textbf{Certifications:} Add role-relevant certifications here
+
+\end{document}

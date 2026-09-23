@@ -1,0 +1,117 @@
+# Job Radar Configuration
+# Copy this file to config.yaml and fill in your values.
+# Environment variables always override YAML values.
+# ------------------------------------------------------------------
+
+# Email notifications (Gmail recommended) ss
+email:
+  user: ""           # your.email@gmail.com
+  password: ""       # Gmail App Password (not your regular password)
+  to: ""             # recipient email
+  smtp_host: smtp.gmail.com
+  smtp_port: 587
+
+# Optional: Slack webhook (post to a channel)
+slack:
+  webhook_url: ""    # https://hooks.slack.com/services/...
+
+# Optional: Discord webhook (post to a channel)
+discord:
+  webhook_url: ""    # https://discord.com/api/webhooks/...
+
+# Database — SQLite file for state persistence
+database:
+  path: state/gha-jobs.db
+
+# Job filtering
+filter:
+  require_us_location: true   # Only alert on US-based jobs
+
+# HTTP timeout for all requests (seconds)
+http_timeout: 30
+
+# Boards sweep configuration (--mode boards)
+boards:
+  csv: ""              # Path to boards CSV; override with BOARDS_CSV env var
+  batch_size: 50       # How many boards to process per run
+  workers: 12          # Concurrent board-fetch threads
+  timeout: 30          # Per-board HTTP timeout
+  rescan_cooldown_hours: 0
+
+# Feature switchboard (also editable in the web UI)
+features:
+  scanner_main: true
+  scanner_boards: true
+  notifications: true
+  manual_jd: true
+  resume_generation: true
+
+# Optional LLM second-pass scoring reviewer.
+# Disabled by default. For Gemini, set GEMINI_API_KEY or GOOGLE_API_KEY in
+# your shell/.env instead of storing the key in this file.
+# Other supported providers: groq, openrouter.
+llm_scoring:
+  enabled: false
+  provider: google
+  model: gemini-2.5-flash-lite
+  endpoint: https://generativelanguage.googleapis.com/v1beta
+  timeout: 20
+  only_score_min: 55
+  only_score_max: 80
+  max_score_adjustment: 8
+  max_description_chars: 6000
+  batch_size: 10
+  max_calls_per_process: 100
+  max_daily_calls: 300
+
+# Per-source caps (set enabled: false to skip a source)
+sources:
+  microsoft:
+    enabled: true
+    max_jobs: 300
+
+  nvidia:
+    enabled: true
+    max_jobs: 300
+
+  amazon:
+    enabled: true
+    max_jobs: 300
+
+  goldman_sachs:
+    enabled: true
+    max_jobs: 200
+
+  ibm:
+    enabled: true
+    max_jobs: 200
+
+  oracle:
+    enabled: true
+    max_jobs: 200
+
+  meta:
+    enabled: true
+    max_jobs: 100
+
+  google:
+    enabled: true
+    max_jobs: 200
+
+  apple:
+    enabled: true
+    max_jobs: 200
+
+  netflix:
+    enabled: true
+    max_jobs: 200
+
+  stripe:
+    enabled: true
+    max_jobs: 200
+
+  # LinkedIn: works locally but GitHub Actions cloud IPs are often blocked.
+  # Set enabled: false if you see 429/403 errors in Actions logs.
+  linkedin:
+    enabled: true
+    max_jobs: 100
