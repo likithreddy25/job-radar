@@ -1,5 +1,6 @@
 board_id,platform,company,url,fail_count,fail_reason,last_checked
 ashby:aviator,ashby,Aviator,https://jobs.ashbyhq.com/aviator,1,HTTP 404,2026-08-08T07:19:30.469055+00:00
+ashby:cloudtrucks,ashby,CloudTrucks,https://jobs.ashbyhq.com/cloudtrucks,1,HTTP 404,2026-10-12T15:40:32.837001+00:00
 ashby:contextual,ashby,Contextual AI,https://jobs.ashbyhq.com/contextual,1,HTTP 404,2026-06-19T05:45:44.905457+00:00
 ashby:continue,ashby,Continue,https://jobs.ashbyhq.com/continue,1,HTTP 404,2026-07-24T04:02:42.643745+00:00
 ashby:laminar,ashby,Laminar,https://jobs.ashbyhq.com/laminar,0,HTTP 404,2026-05-11T21:38:51.828172+00:00
@@ -47,6 +48,7 @@ greenhouse:genies,greenhouse,genies,https://boards.greenhouse.io/genies,0,HTTP 4
 greenhouse:glossgenius,greenhouse,glossgenius,https://boards.greenhouse.io/glossgenius,1,HTTP 404,2026-09-12T07:08:56.226245+00:00
 greenhouse:grammarly,greenhouse,Grammarly,https://boards.greenhouse.io/grammarly,0,HTTP 404,2026-05-11T21:38:54.301876+00:00
 greenhouse:hightouch,greenhouse,Hightouch,https://job-boards.greenhouse.io/hightouch,1,HTTP 404,2026-10-03T00:07:26.193532+00:00
+greenhouse:hubspot,greenhouse,HubSpot,https://boards.greenhouse.io/hubspot,11,HTTP 404,2026-10-12T15:29:16.009372+00:00
 greenhouse:insightly,greenhouse,Insightly,https://boards.greenhouse.io/insightly,7,HTTP 404,2026-06-19T05:34:36.666287+00:00
 greenhouse:loop,greenhouse,Loop,https://boards.greenhouse.io/loop,1,HTTP 404,2026-07-09T04:33:51.081545+00:00
 greenhouse:magicleap,greenhouse,Magic Leap,https://boards.greenhouse.io/magicleap,1,HTTP 404,2026-09-12T07:12:45.202570+00:00
@@ -87,6 +89,7 @@ lever:Rarible,lever,Rarible,https://jobs.lever.co/Rarible,10,HTTP 404,2026-09-12
 lever:clarity-ai,lever,Clarity AI,https://jobs.lever.co/clarity-ai,0,HTTP 404,2026-05-11T22:04:41.317856+00:00
 lever:forto,lever,Forto,https://jobs.lever.co/forto,0,HTTP 404,2026-05-11T22:04:41.573845+00:00
 lever:sanctuary,lever,Sanctuary,https://jobs.lever.co/sanctuary,10,HTTP 404,2026-09-12T07:16:40.611171+00:00
+lever:saronic,lever,Saronic,https://jobs.lever.co/saronic,11,HTTP 404,2026-10-12T15:42:19.699048+00:00
 lever:sprucesystems,lever,Spruce,https://jobs.lever.co/sprucesystems,1,HTTP 404,2026-07-24T03:40:27.415283+00:00
 lever:vinted,lever,Vinted,https://jobs.lever.co/vinted,0,HTTP 404,2026-05-11T22:04:41.633970+00:00
 lever:wandb,lever,Weights & Biases,https://jobs.lever.co/wandb,0,HTTP 404,2026-05-11T22:04:41.263905+00:00
