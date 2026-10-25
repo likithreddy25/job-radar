@@ -1,4 +1,5 @@
 board_id,platform,company,url,fail_count,fail_reason,last_checked
+greenhouse:143studiosinc,greenhouse,143studiosinc,https://boards.greenhouse.io/143studiosinc,1,HTTP 404,2026-10-25T11:59:06.309282+00:00
 greenhouse:1910genetics,greenhouse,1910genetics,https://boards.greenhouse.io/1910genetics,1,HTTP 404,2026-10-10T06:22:37.409605+00:00
 greenhouse:1uphealth,greenhouse,1uphealth,https://boards.greenhouse.io/1uphealth,4,HTTP 404,2026-10-20T17:31:05.631206+00:00
 greenhouse:7shifts,greenhouse,7shifts,https://boards.greenhouse.io/7shifts,1,HTTP 404,2026-10-10T06:22:37.355491+00:00
