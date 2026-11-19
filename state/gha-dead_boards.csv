@@ -1,5 +1,6 @@
 board_id,platform,company,url,fail_count,fail_reason,last_checked
 ashby:aviator,ashby,Aviator,https://jobs.ashbyhq.com/aviator,1,HTTP 404,2026-08-08T07:19:30.469055+00:00
+ashby:cedar,ashby,Cedar,https://jobs.ashbyhq.com/cedar,1,HTTP 404,2026-11-19T20:32:15.871122+00:00
 ashby:cloudtrucks,ashby,CloudTrucks,https://jobs.ashbyhq.com/cloudtrucks,1,HTTP 404,2026-10-12T15:40:32.837001+00:00
 ashby:contextual,ashby,Contextual AI,https://jobs.ashbyhq.com/contextual,1,HTTP 404,2026-06-19T05:45:44.905457+00:00
 ashby:continue,ashby,Continue,https://jobs.ashbyhq.com/continue,1,HTTP 404,2026-07-24T04:02:42.643745+00:00
